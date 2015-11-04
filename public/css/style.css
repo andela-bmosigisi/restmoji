@@ -1,0 +1,19 @@
+body
+{
+	background-color: #fefefe;
+	font-family: 'Merriweather', serif;
+	color: #212121;
+}
+
+.content
+{
+	width: 100%;
+	margin: auto;
+}
+
+.centered
+{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
