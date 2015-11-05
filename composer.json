@@ -4,6 +4,12 @@
     "description": "A RESTful API emoji service",
     "homepage": "https://github.com/andela-bmosigisi/restmoji",
     "license": "MIT",
+    "autoload": {
+        "classmap": [
+            "models",
+            "controllers"
+        ]
+    },
     "require": {
         "slim/slim": "^2.6",
         "sokil/php-mongo": "^1.13"
