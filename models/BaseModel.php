@@ -1,6 +1,7 @@
 <?php
 
 /**
+ *	@author brian.mosigisi
  *	The base model class.
  *	Other models extend this class.
  */
@@ -36,7 +37,7 @@ abstract class BaseModel
 	 */
 	public static function getClient()
 	{
-		// get config from config file here.
+		// get configurations from config file here.
 
 		$config =
 		[

@@ -57,23 +57,36 @@ class AuthToken extends BaseModel
 	}
 
 	/**
+     *  @param string $token
 	 *	Delete a model with the given token.
 	 *	@return boolean
 	 */
 	public static function delete($token)
 	{
-		$client = static::getClient();
-		$collection = $client->getCollection(self::$collection);
+		$authInstance = self::find($token);
 
-		$auth_instance = $collection->find()
-			->where('token', $token)
-			->findOne();
-
-		if (empty($auth_instance)) {
+		if (empty($authInstance)) {
 			return false;
 		}
 
-		$auth_instance->delete();
+		$authInstance->delete();
 		return true;
+	}
+
+	/**
+     *  @param string $token
+	 *	Find whether token is there on db and return it.
+	 *	@return AuthToken $authInstance
+	 */
+	public static function find($token)
+	{
+		$client = static::getClient();
+		$collection = $client->getCollection(self::$collection);
+
+		$authInstance = $collection->find()
+			->where('token', $token)
+			->findOne();
+
+		return $authInstance;
 	}
 }
