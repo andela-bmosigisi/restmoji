@@ -38,12 +38,8 @@ abstract class BaseModel
 	public static function getClient()
 	{
 		// get configurations from config file here.
-
-		$config =
-		[
-			'dns' => 'mongodb://127.0.0.1',
-			'database' => 'restmoji'
-		];
+		$config = file_get_contents(__DIR__.'/../config.json');
+		$config = (array)json_decode($config);
 
 		$client = new Client($config['dns']);
 		$client->useDatabase($config['database']);

@@ -26,12 +26,12 @@ $app->get('/', function () use ($app) {
 $app->group('/auth', function () use ($app) {
 
     $app->post('/login', function () use ($app) {
+        $app->response->headers
+            ->set('Content-Type', 'application/json');
         $username = $app->request()->post('username');
 
         if (empty($username)) {
             $app->response->setStatus(400);
-            $app->response->headers
-                ->set('Content-Type', 'application/json');
             $app->response->body(
                 '{"error" : "Provide a username"}'
             );
@@ -42,20 +42,18 @@ $app->group('/auth', function () use ($app) {
         // login the user and return auth token
         $json = Controllers\AuthController::login($username);
 
-        $app->response->headers
-            ->set('Content-Type', 'application/json');
         $app->response->body($json);
 
         return $app->response();
     });
 
     $app->get('/logout', function() use ($app) {
+        $app->response->headers
+            ->set('Content-Type', 'application/json');
         // Delete auth token from DB.
         $token = $app->request->headers->get('token');
         if (empty($token)) {
             $app->response->setStatus(400);
-            $app->response->headers
-                ->set('Content-Type', 'application/json');
             $app->response->body(
                 '{"error" : "Provide a token to remove"}'
             );
@@ -67,8 +65,6 @@ $app->group('/auth', function () use ($app) {
 
         if (!$prompt) {
             $app->response->setStatus(400);
-            $app->response->headers
-                ->set('Content-Type', 'application/json');
             $app->response->body(
                 '{"error" : "Invalid token"}'
             );
@@ -76,8 +72,6 @@ $app->group('/auth', function () use ($app) {
             return $app->response();
         }
 
-        $app->response->headers
-            ->set('Content-Type', 'application/json');
         $app->response->body(
             '{"success" : "Logged out successfuly"}'
         );
@@ -87,14 +81,14 @@ $app->group('/auth', function () use ($app) {
 });
 
 $app->group('/emojis', function () use ($app) {
+    $app->response->headers
+        ->set('Content-Type', 'application/json');
 
-     // Get an emoji with ID
+    // Get an emoji with ID
     $app->get('/', function () use ($app) {
         $emoji = Controllers\EmojiController::get();
         if (empty($emoji)) {
             $app->response->setStatus(404);
-            $app->response->headers
-                ->set('Content-Type', 'application/json');
             $app->response->body(
                 '{"error" : "Emoji not found"}'
             );
@@ -102,8 +96,6 @@ $app->group('/emojis', function () use ($app) {
             return $app->response();
         }
 
-        $app->response->headers
-            ->set('Content-Type', 'application/json');
         $app->response->body($emoji);
 
         return $app->response(); 
@@ -114,8 +106,6 @@ $app->group('/emojis', function () use ($app) {
         $emoji = Controllers\EmojiController::get($id);
         if (empty($emoji)) {
             $app->response->setStatus(404);
-            $app->response->headers
-                ->set('Content-Type', 'application/json');
             $app->response->body(
                 '{"error" : "Emoji not found"}'
             );
@@ -123,8 +113,6 @@ $app->group('/emojis', function () use ($app) {
             return $app->response();
         }
 
-        $app->response->headers
-            ->set('Content-Type', 'application/json');
         $app->response->body($emoji);
 
         return $app->response(); 
@@ -132,15 +120,19 @@ $app->group('/emojis', function () use ($app) {
 
     // Create an Emoji.
     $app->post('/', function () use ($app) {
-        $postVars = $app->request->post();
+        $postVars = null;
+        if ($app->request->headers->get('Content-Type')
+            == 'application/json') {
+            $postVars = (array)json_decode($app->request->getBody());
+        } else {
+            $postVars = $app->request->post();
+        }
         $emoji = Controllers\EmojiController::create(
             $postVars,
             $app->request->headers->get('token')
         );
         if (empty($emoji)) {
             $app->response->setStatus(400);
-            $app->response->headers
-                ->set('Content-Type', 'application/json');
             $app->response->body(
                 '{"error" : "Validation failed. Check fields."}'
             );
@@ -149,26 +141,73 @@ $app->group('/emojis', function () use ($app) {
         }
 
         $app->response->setStatus(201);
-        $app->response->headers
-            ->set('Content-Type', 'application/json');
         $app->response->body($emoji);
 
         return $app->response(); 
     });
 
     // Update emoji with ID.
-    $app->put('/:id', function ($id) {
+    $app->put('/:id', function ($id) use ($app) {
+        $putVars = $app->request->getBody();
+        $emoji = Controllers\EmojiController::update(
+            $id,
+            $putVars,
+            1
+        );
+        if (empty($emoji)) {
+            $app->response->setStatus(304);
+            $app->response->body(
+                '{"error" : "Not Modified."}'
+            );
 
+            return $app->response();
+        }
+
+        $app->response->body($emoji);
+
+        return $app->response(); 
     });
 
     // Partially update an emoji with ID.
     $app->patch('/:id', function ($id) {
+        $patchVars = $app->request->getBody();
+        $emoji = Controllers\EmojiController::update(
+            $id,
+            $patchVars,
+            2
+        );
+        if (empty($emoji)) {
+            $app->response->setStatus(304);
+            $app->response->body(
+                '{"error" : "Not Modified."}'
+            );
 
+            return $app->response();
+        }
+
+        $app->response->body($emoji);
+
+        return $app->response(); 
     });
 
     // Delete emoji with ID.
-    $app->delete('/:id', function ($id) {
+    $app->delete('/:id', function ($id) use ($app) {
+        $prompt = Controllers\EmojiController::delete($id);
 
+        if (!$prompt) {
+            $app->response->setStatus(400);
+            $app->response->body(
+                '{"error" : "Not deleted. Emoji does not exist."}'
+            );
+
+            return $app->response();
+        }
+
+        $app->response->body(
+            '{"success" : "Emoji '.$id.' deleted successfully."}'
+        );
+
+        return $app->response();
     });
 });
 

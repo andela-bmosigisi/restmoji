@@ -101,6 +101,52 @@ class Emoji extends BaseModel
 	}
 
 	/**
+	 *	@param array $fields
+	 *	Create an emoji with given fields.
+	 *	@return string
+	 */
+	public static function update($id, $fields)
+	{
+		$collection = self::getCollection();
+		$emoji = $collection->find()
+			->where('id', (int)$id)
+			->findOne();
+
+		if (empty($emoji)) {
+			return;
+		}
+
+		foreach ($fields as $key => $value) {
+			$emoji->{$key} = $value;
+		}
+
+		$emoji->save();
+
+		return self::serialize($emoji);
+	}
+
+	/**
+     *  @param string $id
+	 *	Delete a model with the given id.
+	 *	@return boolean
+	 */
+	public static function delete($id)
+	{
+		$collection = self::getCollection();
+		$emoji = $collection->find()
+			->where('id', (int)$id)
+			->findOne();
+
+		if (empty($emoji)) {
+			return false;
+		}
+
+		$emoji->delete();
+
+		return true;
+	}
+
+	/**
 	 *	Implementation of the abstract getFields().
 	 *	@return array $fields
 	 */

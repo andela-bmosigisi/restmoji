@@ -10,6 +10,13 @@ use Burayan\RestMoji\Models\Emoji;
 
 class EmojiController
 {
+
+    /**
+     *  Emoji properties.
+     *  @var array
+     */
+    public static $props = ['name', 'char', 'keywords', 'category'];
+
     /**
      *  Get emojis, either using id or all of them.
      *  @return string $emojiJson
@@ -54,6 +61,59 @@ class EmojiController
     }
 
     /**
+     *  @param int $id
+     *  @param string $fields
+     *  @param int flag 1 represents full update (put).
+     *  Update an Emoji.
+     *  @return string $emojiJson
+     */
+    public static function update($id, $fields, $flag = 1)
+    {
+        // get json fields and decode it to array.
+        $fields = json_decode($fields);
+
+        // Check whether it is a partial or full update
+        if ($flag == 1 && !self::validate($fields)) {
+            return;
+        }
+
+        // If partial update, check for fields.
+        if ($flag == 2) {
+            $prompt = true;
+            foreach (self::$props as $value) {
+                if (isset($fields[$value])) {
+                    $prompt = true;
+                    break;
+                }
+                $prompt = false;
+            }
+
+            if (!$prompt) {
+                return;
+            }
+        }
+        $emoji = Emoji::update($id, $fields);
+
+        if (empty($emoji)) {
+            return;
+        }
+
+        return json_encode($emoji->getFields());
+    }
+
+    /**
+     *  @param string id
+     *  Delete a particular emoji.
+     *  @return boolean.
+     */
+    public static function delete($id)
+    {
+        $prompt = Emoji::delete($id);
+
+        return $prompt;
+    }
+
+    /**
      *  @param $fields
      *  Validate the emoji fields passed.
      *  Return true if the validation is passed.
@@ -61,9 +121,7 @@ class EmojiController
      */
     private static function validate($fields)
     {
-        $props = ['name', 'char', 'keywords', 'category'];
-
-        foreach ($props as $value) {
+        foreach (self::$props as $value) {
             if (!isset($fields[$value])) {
                 return false;
             }
