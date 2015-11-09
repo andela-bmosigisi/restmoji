@@ -94,6 +94,16 @@ class Emoji extends BaseModel
 
 		// add date_created and date_modified fields
 
+		// add id field
+		$cursor = $collection->find()->limit(1)->sort(['id' => -1]);
+		$max = $cursor->findAll();
+
+		if (empty($max)) {
+			$fields['id'] = 1;
+		} else {
+			$max = reset($max);
+			$fields['id'] = $max->id + 1;
+		}
 
 		$emoji = $collection->createDocument($fields)->save();
 

@@ -74,17 +74,17 @@ class AuthToken extends BaseModel
 	}
 
 	/**
-     *  @param string $token
+     *  @param array $match
 	 *	Find whether token is there on db and return it.
 	 *	@return AuthToken $authInstance
 	 */
-	public static function find($token)
+	public static function find($match)
 	{
 		$client = static::getClient();
 		$collection = $client->getCollection(self::$collection);
 
 		$authInstance = $collection->find()
-			->where('token', $token)
+			->where(key($match), reset($match))
 			->findOne();
 
 		return $authInstance;

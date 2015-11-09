@@ -41,7 +41,9 @@ abstract class BaseModel
 		$config = file_get_contents(__DIR__.'/../config.json');
 		$config = (array)json_decode($config);
 
-		$client = new Client($config['dns']);
+		$client = new Client(
+			$config['dns'] . '/' . $config['database']
+		);
 		$client->useDatabase($config['database']);
 
 		return $client;

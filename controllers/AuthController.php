@@ -20,8 +20,21 @@ class AuthController
         // make a random token
         $token = md5(uniqid(mt_rand(), true));
 
-        $auth_token = new AuthToken($username, $token);
-        $auth_token->save();
+        $auth_token = AuthToken::find(['username' => $username]);
+
+        if (empty($auth_token)) {
+            $auth_token = new AuthToken($username, $token);
+            $auth_token->save();
+        } else {
+            $auth_token->token = $token;
+            $temp = new AuthToken(
+                $auth_token->username,
+                $auth_token->token
+            );
+            $auth_token->expiry = $temp->expiry;
+            $auth_token->save();
+            $auth_token = $temp;
+        }
 
         $fields = $auth_token->getFields();
 
@@ -44,7 +57,7 @@ class AuthController
      */
     public static function authenticateToken($token)
     {
-        $authToken = AuthToken::find($token);
+        $authToken = AuthToken::find(['token' => $token]);
         if (empty($authToken)) {
             return false;
         }
