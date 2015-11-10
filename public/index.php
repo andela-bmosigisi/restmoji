@@ -20,6 +20,7 @@ $app->add(new Auth()); // add middleware here
 
 $app->get('/', function () use ($app) {
     // send back the authentication/documentation page
+    $app->response->headers->set('Content-Type', 'text/html');
     $app->render('landing.php');
 });
 

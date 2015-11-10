@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html>
 <head>
   <title>RESTFul Emoji API</title>
   <link href='https://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
 	<div class="content">
