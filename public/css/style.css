@@ -1,12 +1,10 @@
-body
-{
+body {
 	background-color: #fefefe;
 	font-family: 'Merriweather', serif;
 	color: #212121;
 }
 
-.content
-{
+.content {
 	width: 100%;
 	margin: auto;
 }
@@ -16,4 +14,60 @@ body
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
+}
+
+#display {
+	margin-top: 30px;
+	margin-bottom: 30px;
+	width: 60%;
+}
+
+input {
+	border : none;
+	padding : 10px;
+}
+
+button {
+	background : #4285f4;
+	padding : 10px;
+	border: none;
+	color: #fff;
+}
+
+pre {
+	outline: 1px solid #ccc; padding: 5px; margin: 5px; 
+}
+.string { color: green; }
+.number { color: green; }
+.boolean { color: blue; }
+.null { color: blue; }
+.key { color: teal; }
+
+table {
+	background-color: #fefefe;
+	border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+}
+table td, table th {
+
+}
+table th {
+	font-size: 16px;
+	font-style: normal;
+	font-weight: normal;
+	text-align: left;
+	padding: 10px;
+	background-color: whiteSmoke;
+}
+table td {
+	padding: 10px;
+	line-height: 20px;
+	color: #0084B4;
+	font-size: 14px;
+	text-align: left;
+	border-top: 1px solid #3F3F44;
+}
+table tr:hover {
+	background-color: #fff;
 }
