@@ -170,7 +170,7 @@ $app->group('/emojis', function () use ($app) {
     });
 
     // Partially update an emoji with ID.
-    $app->patch('/:id', function ($id) {
+    $app->patch('/:id', function ($id) use ($app) {
         $patchVars = $app->request->getBody();
         $emoji = Controllers\EmojiController::update(
             $id,
@@ -210,6 +210,17 @@ $app->group('/emojis', function () use ($app) {
 
         return $app->response();
     });
+});
+
+$app->notFound(function () use ($app) {
+    $app->response->headers
+        ->set('Content-Type', 'application/json');
+    $app->response->setStatus(404);
+    $app->response->body(
+        '{"error" : "Route not found."}'
+    );
+
+    return $app->response();
 });
 
 $app->run();

@@ -52,8 +52,9 @@ class EmojiController
             $postFields['keywords']
         );
 
-        // add created by
         $postFields['created_by'] = $createdBy;
+        $postFields['date_created'] = date("Y-m-d H:i:s");
+        $postFields['date_modified'] = date("Y-m-d H:i:s");
 
         $emoji = Emoji::create($postFields);
 
@@ -70,7 +71,7 @@ class EmojiController
     public static function update($id, $fields, $flag = 1)
     {
         // get json fields and decode it to array.
-        $fields = json_decode($fields);
+        $fields = (array)json_decode($fields);
 
         // Check whether it is a partial or full update
         if ($flag == 1 && !self::validate($fields)) {
@@ -92,6 +93,13 @@ class EmojiController
                 return;
             }
         }
+        if (isset($fields['keywords'])) {
+            $fields['keywords'] = explode(
+                ',',
+                $fields['keywords']
+            );
+        }
+        $fields['date_modified'] = date("Y-m-d H:i:s");
         $emoji = Emoji::update($id, $fields);
 
         if (empty($emoji)) {
