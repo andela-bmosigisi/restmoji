@@ -92,8 +92,6 @@ class Emoji extends BaseModel
     {
         $collection = self::getCollection();
 
-        // add date_created and date_modified fields
-
         // add id field
         $cursor = $collection->find()->limit(1)->sort(['id' => -1]);
         $max = $cursor->findAll();

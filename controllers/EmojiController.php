@@ -64,7 +64,7 @@ class EmojiController
     /**
      *  @param int $id
      *  @param string $fields
-     *  @param int flag 1 represents full update (put).
+     *  @param int flag 1 represents full update (put), 2 patch.
      *  Update an Emoji.
      *  @return string $emojiJson
      */
