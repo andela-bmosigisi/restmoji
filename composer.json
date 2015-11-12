@@ -1,0 +1,21 @@
+{
+    "name": "burayan/restmoji",
+    "type": "application",
+    "description": "A RESTful API emoji service",
+    "homepage": "https://github.com/andela-bmosigisi/restmoji",
+    "license": "MIT",
+    "autoload": {
+        "classmap": [
+            "models",
+            "controllers",
+            "middleware"
+        ]
+    },
+    "require": {
+        "slim/slim": "^2.6",
+        "sokil/php-mongo": "^1.13"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "^2.3"
+    }
+}

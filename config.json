@@ -1,0 +1,4 @@
+{
+	"dns" : "mongodb://burayan:restmoji@ds051534.mongolab.com:51534",
+	"database" : "restmoji"
+}
