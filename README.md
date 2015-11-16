@@ -11,7 +11,6 @@ This is a restful API service provider that enables you to create, edit, retreiv
 
 - Install PHP
     [Get](http://php.net/manual/en/install.php)
-
 - Install PECL
     [Get On Mac](http://jason.pureconcepts.net/2012/10/install-pear-pecl-mac-os-x/)
 
@@ -61,24 +60,18 @@ To get a full listing of routes and their functions, go [here](restmoji.herokuap
 
 - An emoji model looks as follows:
 
+```
 {
-
     id: 1,
-
     name: “Aunty!”,
-
     char: ​'\U1083',
-
     keywords:[“raise”, “hands”, “girl”, “woman”],
-
     category: “people”,
-
     date_created: “2015-08-12 11:57:23”,
-
     date_modified: “2015-08-12 11:57:23”,
-
     created_by: “1342f32-23232dgh-e43bt9”
 }
+```
 
 ***Important notes***
 
