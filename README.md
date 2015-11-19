@@ -33,7 +33,7 @@ Using php development server:
 
 You can now access the application at localhost:8000
 
-NB: If you are using apache, make sure that you serve the /public directory.
+_NB:_ If you are using apache, make sure that you serve the /public directory.
 
 
 ***Running tests:***
