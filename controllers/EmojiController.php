@@ -137,7 +137,10 @@ class EmojiController
                 return false;
             }
         }
+        // Validate the char field, to ensure it is a valid emoji
+        // The unicode range for emoji is U+1F600 to U+1F64F
+        $pattern = '/^U\+1F6[0-4][0-9A-F]$/';
 
-        return true;
+        return preg_match($pattern, $fields['char']);
     }
 }
