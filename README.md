@@ -9,13 +9,9 @@ This is a restful API service provider that enables you to create, edit, retreiv
 
 ***Prerequisite software:***
 
-- Install PHP
-    [Get](http://php.net/manual/en/install.php)
-- Install PECL
-    [Get On Mac](http://jason.pureconcepts.net/2012/10/install-pear-pecl-mac-os-x/)
-
-- Install MongoDB PHP Driver
-    [Get](https://docs.mongodb.org/ecosystem/drivers/php/)
+- Install [PHP](http://php.net/manual/en/install.php)
+- Install PECL [on Mac](http://jason.pureconcepts.net/2012/10/install-pear-pecl-mac-os-x/)
+- Install [MongoDB PHP Driver](https://docs.mongodb.org/ecosystem/drivers/php/)
 
 ***Get the code***
 
@@ -50,11 +46,11 @@ Some restful routes have been provided for managing emojis.
 
 Some routes require authentication while others are publicly accessible.
 
-To get a full listing of routes and their functions, go [here](restmoji.herokuapp.com)
+To get a full listing of routes and their functions, go [here](http://restmoji.herokuapp.com)
 
 ***Getting started***
 
-- Get an auth token [here](restmoji.herokuapp.com)
+- Get an auth token [here](http://restmoji.herokuapp.com)
 
 - For non-publicly accessible routes, include a field whose key is 'token' and value is the value of the token field obtained above.
 
@@ -77,7 +73,7 @@ To get a full listing of routes and their functions, go [here](restmoji.herokuap
 
 - POST, PATCH and PUT requests expect json data to be passed to the server. Therefore, remember to include this in your request header. 
 
-    'Content-Type'  :   'application/json'
+    `'Content-Type'  :   'application/json'`
 
 - Keywords should be provided as a comma-separated list of words.
 
