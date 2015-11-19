@@ -51,9 +51,7 @@ To get a full listing of routes and their functions, go [here](http://restmoji.h
 ***Getting started***
 
 - Get an auth token [here](http://restmoji.herokuapp.com)
-
 - For non-publicly accessible routes, include a field whose key is 'token' and value is the value of the token field obtained above.
-
 - An emoji model looks as follows:
 
 ```
@@ -72,13 +70,9 @@ To get a full listing of routes and their functions, go [here](http://restmoji.h
 ***Important notes***
 
 - POST, PATCH and PUT requests expect json data to be passed to the server. Therefore, remember to include this in your request header. 
-
     `'Content-Type'  :   'application/json'`
-
 - Keywords should be provided as a comma-separated list of words.
-
 - For POST/PUT requests, [name, char, keywords, category] fields are required.
-
 - Atleast one field is required for PATCH requests.
 
 ## License
